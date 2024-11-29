@@ -9,10 +9,19 @@ const { v4: uuidv4 } = require("uuid");
 
 const tasksFilePath = path.join(__dirname, "..", "data", "tasks.json");
 
-const readTasksFromFile = async () => {
+const getAllTasks = async () => {
   try {
     const data = await readTasksFromFileFunction(tasksFilePath);
     return data;
+  } catch (error) {
+    throw error;
+  }
+};
+const getTaskByStatus = async (statusParam) => {
+  try {
+    const tasks = await readTasksFromFileFunction(tasksFilePath);
+    const filteredTasks = tasks.filter((task) => task.status === statusParam);
+    return filteredTasks;
   } catch (error) {
     throw error;
   }
@@ -67,7 +76,8 @@ const deleteTaskById = async (id) => {
 
 module.exports = {
   createTask,
-  readTasksFromFile,
+  getAllTasks,
   updateTaskById,
   deleteTaskById,
+  getTaskByStatus,
 };

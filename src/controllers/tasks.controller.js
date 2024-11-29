@@ -6,7 +6,22 @@ const path = require("path");
 
 exports.getAllTasks = async (req, res, next) => {
   try {
-    const tasks = await taskServices.readTasksFromFile();
+    const tasks = await taskServices.getAllTasks();
+    res.status(200).json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getAllTasksByStatus = async (req, res, next) => {
+  const status = String(req.params.status).toLowerCase() || null;
+  try {
+    if (!status || !["pending", "completed"].includes(status)) {
+      throw new CustomError(
+        "Invalid status. Status must be 'pending' or 'completed'",
+        400
+      );
+    }
+    const tasks = await taskServices.getTaskByStatus(status);
     res.status(200).json(tasks);
   } catch (error) {
     next(error);
@@ -42,7 +57,7 @@ exports.updateTask = async (req, res, next) => {
     next(error);
   }
 };
-exports.updateTask = async (req, res, next) => {
+exports.deleteTask = async (req, res, next) => {
   try {
     const taskId = req.params.id || null;
     if (!taskId) {
