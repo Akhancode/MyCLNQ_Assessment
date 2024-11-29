@@ -47,5 +47,11 @@
     "title": "Start assignment",
     "description": "Submit by 5 PM",
     "status": "pending"
+  },
+  {
+    "id": "94b0cf64-c836-4e2b-b142-f11ef111c73c",
+    "title": "Start assignment",
+    "description": "Submit by 5 PM",
+    "status": "completed"
   }
 ]

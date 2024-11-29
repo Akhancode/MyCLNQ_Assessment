@@ -1,7 +1,10 @@
 const { CustomError } = require("../utils/errors/error");
 const fs = require("fs").promises;
 const path = require("path");
-const { readTasksFromFileFunction, writeTasksToFileFunction } = require("../utils/helper/helperFunction");
+const {
+  readTasksFromFileFunction,
+  writeTasksToFileFunction,
+} = require("../utils/helper/helperFunction");
 const { v4: uuidv4 } = require("uuid");
 
 const tasksFilePath = path.join(__dirname, "..", "data", "tasks.json");
@@ -15,9 +18,8 @@ const readTasksFromFile = async () => {
   }
 };
 
-
-const createTask = async (req, res) => {
-  const { title, description, status } = req.body;
+const createTask = async (body) => {
+  const { title, description, status } = body;
   try {
     // Validation
     if (!title || !description) {
@@ -28,19 +30,31 @@ const createTask = async (req, res) => {
       id: uuidv4(),
       title,
       description,
-      status: status || "pending", // Default status is 'pending'
+      status: status || "pending",
     };
 
     tasks.push(newTask);
-    await writeTasksToFileFunction(tasks,tasksFilePath);
+    await writeTasksToFileFunction(tasks, tasksFilePath);
 
-    return { message: "Task created successfully", task: newTask };
+    return newTask;
   } catch (error) {
     throw error;
   }
 };
 
+const updateTaskById = async (id, newStatus) => {
+  const tasks = await readTasksFromFile();
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+  if (taskIndex === -1) {
+    throw new CustomError("Task not found", 404);
+  }
+  tasks[taskIndex].status = newStatus;
+  await writeTasksToFileFunction(tasks, tasksFilePath);
+  return tasks[taskIndex];
+};
+
 module.exports = {
   createTask,
   readTasksFromFile,
+  updateTaskById,
 };

@@ -85,7 +85,7 @@ paths:
           name: id
           required: true
           schema:
-            type: integer
+            type: string
           description: The task ID
       responses:
         '200':
@@ -113,7 +113,7 @@ paths:
           name: id
           required: true
           schema:
-            type: integer
+            type: string
           description: The task ID
       requestBody:
         required: true
