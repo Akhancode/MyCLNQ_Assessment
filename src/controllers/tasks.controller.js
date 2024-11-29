@@ -6,7 +6,7 @@ const path = require("path");
 
 exports.getAllTasks = async (req, res, next) => {
   try {
-    let tasks =await taskServices.readTasksFromFile()
+    const tasks =await taskServices.readTasksFromFile()
     res.status(200).json(tasks);
   } catch (error) {
     next(error);
@@ -14,7 +14,9 @@ exports.getAllTasks = async (req, res, next) => {
 };
 exports.createTask = async (req, res, next) => {
   try {
-    await taskServices.createTask(req,res)
+    const task =  await taskServices.createTask(req,res)
+    res.status(200).json(task);
+
   } catch (error) {
     next(error);
   }

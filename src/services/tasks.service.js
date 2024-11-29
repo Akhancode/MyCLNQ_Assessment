@@ -1,56 +1,42 @@
 const { CustomError } = require("../utils/errors/error");
 const fs = require("fs").promises;
 const path = require("path");
+const { readTasksFromFileFunction, writeTasksToFileFunction } = require("../utils/helper/helperFunction");
+const { v4: uuidv4 } = require("uuid");
+
 const tasksFilePath = path.join(__dirname, "..", "data", "tasks.json");
+
 const readTasksFromFile = async () => {
   try {
-    const data = await fs.readFile(tasksFilePath, "utf-8");
-    return JSON.parse(data || "[]"); 
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      console.error("JSON file not found");
-    }
-    throw error; 
-  }
-};
-const writeTasksToFile = async (tasks) => {
-  try {
-    await fs.writeFile(tasksFilePath, JSON.stringify(tasks, null, 2));
+    const data = await readTasksFromFileFunction(tasksFilePath);
+    return data;
   } catch (error) {
     throw error;
   }
 };
 
-// Create Task Controller (async)
+
 const createTask = async (req, res) => {
   const { title, description, status } = req.body;
-
-  // Validation
-  if (!title || !description) {
-    return res
-      .status(400)
-      .json({ error: "Title and description are required" });
-  }
-
   try {
-    const tasks = await readTasksFromFile();
+    // Validation
+    if (!title || !description) {
+      throw new CustomError("Title and description are required", 400);
+    }
+    const tasks = await readTasksFromFileFunction(tasksFilePath);
     const newTask = {
-      id: Date.now(),
+      id: uuidv4(),
       title,
       description,
       status: status || "pending", // Default status is 'pending'
     };
 
     tasks.push(newTask);
-    await writeTasksToFile(tasks);
+    await writeTasksToFileFunction(tasks,tasksFilePath);
 
-    res
-      .status(201)
-      .json({ message: "Task created successfully", task: newTask });
+    return { message: "Task created successfully", task: newTask };
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+    throw error;
   }
 };
 

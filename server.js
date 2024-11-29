@@ -28,18 +28,19 @@ app.use(monitor_api);
 app.use("/api", routes);
 
 // global error handling middleware
-// app.use((err, req, res, next) => {
-//   const statusCode = err.statusCode || err.code || 500;
-//   console.error({ message: err.message || err, code: statusCode });
-//   res.status(statusCode).json({ message: err.message || err });
-//   return;
-// });
 app.use((err, req, res, next) => {
-  console.error(err.message);
-  res
-    .status(500)
-    .json({ error: "Internal Server Error", details: err.message });
+  console.log(err)
+  const statusCode = err.statusCode || err.code || 500;
+  console.error({ message: err.message || err, code: statusCode });
+  res.status(statusCode).json({ message: err.message || err });
+  return;
 });
+// app.use((err, req, res, next) => {
+//   console.error(err.message);
+//   res
+//     .status(500)
+//     .json({ error: "Internal Server Error", details: err.message });
+// });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
