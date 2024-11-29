@@ -8,7 +8,7 @@ const swaggerui = require("swagger-ui-express");
 const YAML = require("yamljs");
 const bodyParser = require("body-parser");
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -35,12 +35,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ message: err.message || err });
   return;
 });
-// app.use((err, req, res, next) => {
-//   console.error(err.message);
-//   res
-//     .status(500)
-//     .json({ error: "Internal Server Error", details: err.message });
-// });
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
