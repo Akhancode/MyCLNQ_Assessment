@@ -1,7 +1,7 @@
 {
-  "name": "GoMarble Assessment",
+  "name": "MYCLNQ Assessment",
   "version": "1.0.0",
-  "description": "GoMarble Assessment",
+  "description": "MYCLNQ Assessment",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

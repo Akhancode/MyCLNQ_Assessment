@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express();
 
-const habitRoute = require("./habit.route");
+const tasksRoute = require("./tasks.route");
 
-router.use("/habit",habitRoute);
+router.use("/tasks",tasksRoute);
 
 
 

@@ -8,7 +8,6 @@ const swaggerui = require("swagger-ui-express");
 const YAML = require("yamljs");
 const bodyParser = require("body-parser");
 
-
 const PORT = process.env.PORT;
 
 const app = express();
@@ -26,18 +25,22 @@ app.use("/api-docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
 app.use(monitor_api);
 
 //routes
-app.use("/api", routes); 
-
+app.use("/api", routes);
 
 // global error handling middleware
+// app.use((err, req, res, next) => {
+//   const statusCode = err.statusCode || err.code || 500;
+//   console.error({ message: err.message || err, code: statusCode });
+//   res.status(statusCode).json({ message: err.message || err });
+//   return;
+// });
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || err.code || 500;
-  console.error({ message: err.message || err, code: statusCode });
-  res.status(statusCode).json({ message: err.message || err });
-  return;
+  console.error(err.message);
+  res
+    .status(500)
+    .json({ error: "Internal Server Error", details: err.message });
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
 
 module.exports = app;
