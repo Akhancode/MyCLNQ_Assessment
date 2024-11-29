@@ -52,7 +52,7 @@ const createTask = async (body) => {
 };
 
 const updateTaskById = async (id, newStatus) => {
-  const tasks = await readTasksFromFile();
+  const tasks = await readTasksFromFileFunction(tasksFilePath);
   const taskIndex = tasks.findIndex((task) => task.id === id);
   if (taskIndex === -1) {
     throw new CustomError("Task not found", 404);
@@ -62,7 +62,7 @@ const updateTaskById = async (id, newStatus) => {
   return tasks[taskIndex];
 };
 const deleteTaskById = async (id) => {
-  const tasks = await readTasksFromFile();
+  const tasks = await readTasksFromFileFunction(tasksFilePath);
   const taskIndex = tasks.findIndex((task) => task.id === id);
   if (taskIndex === -1) {
     throw new CustomError("Task not found", 404);
