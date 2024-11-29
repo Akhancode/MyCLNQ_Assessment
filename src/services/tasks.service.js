@@ -52,9 +52,22 @@ const updateTaskById = async (id, newStatus) => {
   await writeTasksToFileFunction(tasks, tasksFilePath);
   return tasks[taskIndex];
 };
+const deleteTaskById = async (id) => {
+  const tasks = await readTasksFromFile();
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+  if (taskIndex === -1) {
+    throw new CustomError("Task not found", 404);
+  }
+  //removing that index task
+  tasks.splice(taskIndex, 1);
+
+  await writeTasksToFileFunction(tasks, tasksFilePath);
+  return "Task deleted successfully";
+};
 
 module.exports = {
   createTask,
   readTasksFromFile,
   updateTaskById,
+  deleteTaskById,
 };

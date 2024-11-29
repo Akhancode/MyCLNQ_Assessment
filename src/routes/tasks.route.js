@@ -8,6 +8,7 @@ updateTask
 router.post("/", createTask);
 router.get("/", getAllTasks);
 router.put("/:id", updateTask);
+router.delete("/:id", updateTask);
 
 
 // router.get("/:id", getHabitById);

@@ -25,15 +25,32 @@ exports.updateTask = async (req, res, next) => {
     const taskId = req.params.id || null;
     const status = String(req.body?.status)?.toLowerCase() || null;
     if (!taskId) {
-      throw new CustomError("Required Task id in Params",400);
+      throw new CustomError("Required Task id in Params", 400);
     }
     if (!status || !["pending", "completed"].includes(status)) {
-      throw new CustomError("Required status in request body (confirm spelling)",400);
+      throw new CustomError(
+        "Required status in request body (confirm spelling)",
+        400
+      );
     }
     const updatedTask = await taskServices.updateTaskById(taskId, status);
     res.status(200).json({
       message: "Task status updated successfully",
       task: updatedTask,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.updateTask = async (req, res, next) => {
+  try {
+    const taskId = req.params.id || null;
+    if (!taskId) {
+      throw new CustomError("Required Task id in Params", 400);
+    }
+    const message = await taskServices.deleteTaskById(taskId);
+    res.status(200).json({
+      message,
     });
   } catch (error) {
     next(error);
