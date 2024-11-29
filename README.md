@@ -6,7 +6,7 @@ TaskFlow is a simple task management system built using Express.js. The API allo
 ## Technologies Used
 - **Node.js**: JavaScript runtime environment for building the backend.
 - **Express.js**: Web framework for building the RESTful API.
-- **In-memory Storage**: Tasks are stored in-memory or a file (JSON format) for persistence.
+- **In-memory Storage**: Tasks are stored  file (JSON format) for persistence.
 
 ## Installation
 
