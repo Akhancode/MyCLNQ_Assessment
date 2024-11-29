@@ -50,10 +50,10 @@ paths:
               properties:
                 title:
                   type: string
-                  example: "Finish assignment"
+                  example: "Workout"
                 description:
                   type: string
-                  example: "Submit by 5 PM"
+                  example: "Go to Gym by 5 AM"
                 status:
                   type: string
                   enum: ["pending", "completed"]
@@ -67,8 +67,8 @@ paths:
                 type: object
                 example:
                   id: 1
-                  title: "Finish assignment"
-                  description: "Submit by 5 PM"
+                  title: "Task name"
+                  description: "Submit by 5 AM"
                   status: "pending"
         '400':
           description: Bad request (missing required fields)
@@ -76,34 +76,6 @@ paths:
           description: Server error
 
   /tasks/{id}:
-    get:
-      tags:
-        - Tasks
-      summary: Get a task by ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: The task ID
-      responses:
-        '200':
-          description: The task details
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  id: 1
-                  title: "Buy groceries"
-                  description: "Milk, eggs, bread"
-                  status: "pending"
-        '404':
-          description: Task not found
-        '500':
-          description: Server error
-
     put:
       tags:
         - Tasks
@@ -122,12 +94,6 @@ paths:
             schema:
               type: object
               properties:
-                title:
-                  type: string
-                  example: "Updated task title"
-                description:
-                  type: string
-                  example: "Updated description"
                 status:
                   type: string
                   enum: ["pending", "completed"]
