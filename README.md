@@ -11,7 +11,7 @@ TaskFlow is a simple task management system built using Express.js. The API allo
 ## Installation
 
 ### Prerequisites
-- **Node.js** (version 12 or above recommended)
+- **Node.js**
 
 ### Steps to Install
 
